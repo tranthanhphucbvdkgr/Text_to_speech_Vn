@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --color-app-bg: #FFFFFF;
+  --color-app-accent: #3B82F6; /* Blue */
+  --color-app-secondary: #EC4899; /* Pink */
+  --color-app-text: #1F2937; /* Black/Dark Gray */
+  --color-app-dim: #6B7280; /* Gray 500 */
+  --color-app-glass: rgba(255, 255, 255, 0.8);
+  --color-app-glass-border: rgba(59, 130, 246, 0.1);
+  
+  --color-nocturne-bg: var(--color-app-bg);
+  --color-nocturne-accent: var(--color-app-accent);
+  --color-nocturne-text: var(--color-app-text);
+  --color-nocturne-dim: var(--color-app-dim);
+  --color-nocturne-glass: var(--color-app-glass);
+  --color-nocturne-glass-border: var(--color-app-glass-border);
+  
+  --font-serif: "Times New Roman", "Georgia", serif;
+  --font-sans: "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-nocturne-bg text-nocturne-text font-sans antialiased overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/20;
+  }
+
+  .custom-audio-player {
+    filter: invert(100%) hue-rotate(180deg) brightness(0);
+    opacity: 0.8;
+  }
+  .custom-audio-player:hover {
+    opacity: 1;
+  }
+
+  .custom-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--color-app-accent);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+    border: 2px solid white;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .custom-range-mini::-webkit-slider-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background: var(--color-app-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(236, 72, 153, 0.3);
+    border: 2px solid white;
+  }
+
+  .text-justify {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+}
