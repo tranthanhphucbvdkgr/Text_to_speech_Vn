@@ -12,6 +12,42 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
+// Allow requests from the GitHub Pages frontend and local development.
+const allowedOrigins = new Set([
+  'https://tranthanhphucbvdkgr.github.io',
+  'http://localhost:3000',
+  'http://localhost:5173',
+  ...(process.env.FRONTEND_URL || '').split(',').map((origin) => origin.trim()).filter(Boolean),
+]);
+
+app.use((req: Request, res: Response, next) => {
+  const origin = req.headers.origin;
+  if (origin && !allowedOrigins.has(origin)) {
+    if (req.path.startsWith('/api/')) {
+      res.status(403).json({ error: 'Nguồn truy cập không được phép.' });
+      return;
+    }
+    next();
+    return;
+  }
+
+  if (origin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  }
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(204);
+    return;
+  }
+  next();
+});
+
+app.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok', service: 'text-to-speech-api' });
+});
+
 app.use(express.json({ limit: '50mb' }));
 
 // Shared server-side Gemini client
