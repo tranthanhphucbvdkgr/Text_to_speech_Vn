@@ -890,7 +890,8 @@ export default function App() {
     setError(null);
 
     try {
-      const response = await fetch('/api/tts', {
+      const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+      const response = await fetch(`${apiBaseUrl}/api/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
